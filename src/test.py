@@ -21,6 +21,7 @@ from sklearn.metrics import (
 
 
 def ComputeMetrics(y_val, y_pred):
+
     accuracy = accuracy_score(y_val, y_pred)
     precision = precision_score(y_val, y_pred, average="weighted", zero_division=0)
     recall = recall_score(y_val, y_pred, average="weighted", zero_division=0)
@@ -44,12 +45,24 @@ def ComputeMetrics(y_val, y_pred):
 
     # Log metrics to MLflow and save a metrics bar chart artifact
     if mlflow.active_run() is None:
-        mlflow.start_run()
+        run = mlflow.start_run()
         started_run = True
     else:
+        run = mlflow.active_run()
         started_run = False
 
     try:
+
+        run_id = run.info.run_id
+        print(f"Logging metrics to MLflow run with ID: {run_id}")  
+        experiment_id = run.info.experiment_id
+        tracking_url = mlflow.get_tracking_uri()
+        print(f"MLflow Tracking URI: {tracking_url}")
+
+        print("mlflow ui link: ", f"{tracking_url}/#/experiments/{experiment_id}/runs/{run_id}")
+
+
+
         mlflow.log_metrics(metrics_dict)
 
         labels = list(metrics_dict.keys())
@@ -71,6 +84,12 @@ def ComputeMetrics(y_val, y_pred):
         plt.close(fig)
 
         mlflow.log_artifact(chart_path, artifact_path="metrics")
+
+
+
+
+
+
     finally:
         if started_run:
             mlflow.end_run()

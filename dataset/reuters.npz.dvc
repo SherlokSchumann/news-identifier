@@ -1,0 +1,5 @@
+outs:
+- md5: 87aedbeb0cb229e378797a632c1997b6
+  size: 2110848
+  hash: md5
+  path: reuters.npz

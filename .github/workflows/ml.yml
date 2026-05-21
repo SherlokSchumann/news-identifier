@@ -35,7 +35,7 @@ jobs:
         dvc remote modify myremote region eu-central-003
 
     - name: DVC pull
-      run: dvc pull || true
+      run: dvc pull --force || true
 
 
     - name: DVC repro

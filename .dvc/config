@@ -1,4 +1,6 @@
 [core]
-    remote = myremote_gdrive
-['remote "myremote_gdrive"']
-    url = gdrive://1ydMOyu3Zt4SsiCyhym0eE6UwfnwXSJTk
+    remote = myremote
+['remote "myremote"']
+    url = s3://mybucketo
+    endpointurl = https://s3.eu-central-003.backblazeb2.com
+    region = eu-central-003

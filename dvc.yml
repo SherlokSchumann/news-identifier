@@ -3,7 +3,7 @@ stages:
     cmd: python src/preprocess.py
     deps:
       - src/preprocess.py
-      - dataset/dataset.npz
+      - dataset/reuters.npz
     outs:
       - dataset/dataset_preprocessed.npz
 

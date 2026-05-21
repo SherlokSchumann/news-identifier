@@ -8,42 +8,46 @@ jobs:
   ml-job:
     runs-on: ubuntu-latest
 
+    # Set the s3 bucket access credentials on the github computer
+    env: 
+      AWS_ACCESS_KEY_ID: ${{ secrets.B2_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.B2_SECRET_ACCESS_KEY }}
+
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: '3.8'
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
 
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        python -m pip install streamlit tensorflow numpy h5py pandas mlflow matplotlib seaborn scikit-learn
-        python -m pip install dvc[gdrive]
+        pip install streamlit tensorflow numpy h5py pandas mlflow matplotlib seaborn scikit-learn
+        pip install dvc[s3]
 
-    - name: Configure DVC Google Drive credentials
-        env:
-          GDRIVE_CREDENTIALS_DATA: ${{ secrets.GDRIVE_CREDENTIALS_DATA }}
-        run: echo '${{ secrets.GDRIVE_CREDENTIALS_DATA }}' > gdrive_credentials.json
-        #this saves the credentials for dvc in the github actions computer
+# it is necessary that these configurations are done for dvc to work correctely
+    - name: Configure DVC remote
+      run: |
+        dvc remote modify myremote endpointurl https://s3.eu-central-003.backblazeb2.com
+        dvc remote modify myremote region eu-central-003
 
     - name: DVC pull
-        run: dvc pull
+      run: dvc pull
 
     - name: DVC repro
-        run: dvc repro
+      run: dvc repro
 
     - name: DVC push
-        run: dvc push
-
-    - name: Commit models to git
-        run: |
-          git config user.email "github-actions@github.com"
-          git config user.name "GitHub Actions"
-          git add models/
-          git diff --staged --quiet || git commit -m "Update models [CI]"
-          git push origin HEAD:${{ github.head_ref }
-
-
+      run: dvc push
+# we must commit both the models and the updated dvc.lock so that the next repro round runs. 
+    - name: Commit updated dvc.lock
+      run: |
+        git config user.email "github-actions@github.com"
+        git config user.name "GitHub Actions"
+        git add dvc.lock
+        git add -f models/*.h5 
+        git diff --staged --quiet || git commit -m "Update models and dvc.lock [CI]"
+        git push origin HEAD:${{ github.head_ref }}

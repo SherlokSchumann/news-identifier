@@ -187,33 +187,33 @@ def ComputeMetrics(y_val, y_pred):
         if started_run:
             mlflow.end_run()
 
-#--------------------fit the three layer transformer model and compute the training metrics--------------------
+# #--------------------fit the three layer transformer model and compute the training metrics--------------------
 
-num_transformer_layers = 3
-model = build_and_save_transformer_classifier(num_transformer_layers)
-model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
-history = model.fit(x_train, y_train, epochs=8, batch_size=64, validation_data=(x_val, y_val))
+# num_transformer_layers = 3
+# model = build_and_save_transformer_classifier(num_transformer_layers)
+# model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+# history = model.fit(x_train, y_train, epochs=8, batch_size=64, validation_data=(x_val, y_val))
 
-ComputeMetrics(y_train  , np.argmax(model.predict(x_train), axis=1))
+# ComputeMetrics(y_train  , np.argmax(model.predict(x_train), axis=1))
 
-model.save(MODEL_DIR / 'transformer_classifier_3_layers.h5')
+# model.save(MODEL_DIR / 'transformer_classifier_3_layers.h5')
 
 #--------------------do for 5 layers--------------------
 num_transformer_layers = 5
 model = build_and_save_transformer_classifier(num_transformer_layers)
 model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
-history = model.fit(x_train, y_train, epochs=6, batch_size=64, validation_data=(x_val, y_val))
+history = model.fit(x_train, y_train, epochs=1, batch_size=64, validation_data=(x_val, y_val))
 
 ComputeMetrics(y_train  , np.argmax(model.predict(x_train), axis=1))
 
 model.save(MODEL_DIR / 'transformer_classifier_5_layers.h5')
 
-#--------------------do for 7 layers--------------------
-num_transformer_layers = 7
-model = build_and_save_transformer_classifier(num_transformer_layers)
-model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
-history = model.fit(x_train, y_train, epochs=7, batch_size=64, validation_data=(x_val, y_val))
+# #--------------------do for 7 layers--------------------
+# num_transformer_layers = 7
+# model = build_and_save_transformer_classifier(num_transformer_layers)
+# model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
+# history = model.fit(x_train, y_train, epochs=7, batch_size=64, validation_data=(x_val, y_val))
 
-ComputeMetrics(y_train  , np.argmax(model.predict(x_train), axis=1))
+# ComputeMetrics(y_train  , np.argmax(model.predict(x_train), axis=1))
 
-model.save(MODEL_DIR / 'transformer_classifier_7_layers.h5')
+# model.save(MODEL_DIR / 'transformer_classifier_7_layers.h5')

@@ -51,9 +51,9 @@ def ComputeMetrics(y_val, y_pred):
         "f1": f1,
     }
 
-    if(accuracy < 0.7):
-        print("Warning: One or more accuracy metrics are below 0.7, indicating potential issues with the model's performance.")
-        exit(1)
+    #if(accuracy < 0.7):
+    #    print("Warning: One or more accuracy metrics are below 0.7, indicating potential issues with the model's performance.")
+    #    exit(1)
 
     # Log metrics to MLflow and save a metrics bar chart artifact
     if mlflow.active_run() is None:

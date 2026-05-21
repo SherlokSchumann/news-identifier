@@ -11,8 +11,7 @@ jobs:
   ml-job:
     runs-on: ubuntu-latest
 
-    # Set the s3 bucket access credentials on the github computer
-    env: 
+    env:
       AWS_ACCESS_KEY_ID: ${{ secrets.B2_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.B2_SECRET_ACCESS_KEY }}
 
@@ -37,7 +36,6 @@ jobs:
       run: |
         python -c "import tensorflow as tf; import keras; print('TensorFlow:', tf.__version__); print('Keras:', keras.__version__)"
 
-# it is necessary that these configurations are done for dvc to work correctely
     - name: Configure DVC remote
       run: |
         dvc remote modify myremote endpointurl https://s3.eu-central-003.backblazeb2.com
@@ -46,19 +44,13 @@ jobs:
     - name: DVC pull
       run: dvc pull --force || true
 
-    - name: Preprocess data
-      run: dvc repro preprocess
+    - name: DVC repro
+      run: dvc repro
 
-    # - name: DVC repro
-    #   run: dvc repro
+    - name: DVC push
+      run: dvc push
 
-    # - name: DVC push
-    #   run: dvc push
-
-    - name: Run tests
-      run: python src/test.py
-# we must commit both the models and the updated dvc.lock so that the next repro round runs. 
-    - name: Commit updated dvc.lock
+    - name: Commit models and dvc.lock
       run: |
         git config user.email "github-actions@github.com"
         git config user.name "GitHub Actions"
@@ -68,5 +60,3 @@ jobs:
         git diff --staged --quiet || git commit -m "Update models and dvc.lock [CI]"
         git pull -X ours origin ${{ github.head_ref }}
         git push origin ${{ github.head_ref }}
-
-#f

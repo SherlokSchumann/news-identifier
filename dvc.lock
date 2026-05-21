@@ -16,3 +16,34 @@ stages:
       hash: md5
       md5: f41e6108266d96307a8284f4b01ce47c
       size: 6965493
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: dataset/dataset_preprocessed.npz
+      hash: md5
+      md5: f41e6108266d96307a8284f4b01ce47c
+      size: 6965493
+    - path: src/train.py
+      hash: md5
+      md5: 2ff74dbd663561805875bd3353d0a57e
+      size: 7643
+    outs:
+    - path: models/transformer_classifier_5_layers.h5
+      hash: md5
+      md5: 4d52bb271ec1a4e5125230f682f60d63
+      size: 5107656
+  test:
+    cmd: python src/test.py
+    deps:
+    - path: dataset/dataset_preprocessed.npz
+      hash: md5
+      md5: f41e6108266d96307a8284f4b01ce47c
+      size: 6965493
+    - path: models/transformer_classifier_5_layers.h5
+      hash: md5
+      md5: 4d52bb271ec1a4e5125230f682f60d63
+      size: 5107656
+    - path: src/test.py
+      hash: md5
+      md5: 69c6706b7eacb5080df8eecdeec72277
+      size: 7387

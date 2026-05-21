@@ -1,0 +1,18 @@
+schema: '2.0'
+stages:
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+    - path: dataset/reuters.npz
+      hash: md5
+      md5: 87aedbeb0cb229e378797a632c1997b6
+      size: 2110848
+    - path: src/preprocess.py
+      hash: md5
+      md5: bde65a4c881ceaadd7f0dac320accf21
+      size: 1219
+    outs:
+    - path: dataset/dataset_preprocessed.npz
+      hash: md5
+      md5: f41e6108266d96307a8284f4b01ce47c
+      size: 6965493

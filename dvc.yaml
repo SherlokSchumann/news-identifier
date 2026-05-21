@@ -1,0 +1,30 @@
+stages:
+  preprocess:
+    cmd: python src/preprocess.py
+    deps:
+      - src/preprocess.py
+      - dataset/reuters.npz
+    outs:
+      - dataset/dataset_preprocessed.npz
+
+  train:
+    cmd: python src/train.py
+    deps:
+      - src/train.py
+      - dataset/dataset_preprocessed.npz
+    outs:
+      - models/transformer_classifier_3_layers.h5:
+          cache: false
+      - models/transformer_classifier_5_layers.h5:
+          cache: false
+      - models/transformer_classifier_7_layers.h5:
+          cache: false
+
+  test:
+    cmd: python src/test.py
+    deps:
+      - src/test.py
+      - dataset/dataset_preprocessed.npz
+      - models/transformer_classifier_3_layers.h5
+      - models/transformer_classifier_5_layers.h5
+      - models/transformer_classifier_7_layers.h5

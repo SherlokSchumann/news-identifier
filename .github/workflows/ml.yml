@@ -35,7 +35,7 @@ jobs:
         dvc remote modify myremote region eu-central-003
 
     - name: DVC pull
-      run: run: dvc pull dataset/reuters.npz dataset/dataset_preprocessed.npz
+      run: dvc pull dataset/reuters.npz dataset/dataset_preprocessed.npz
 
     - name: DVC repro
       run: dvc repro

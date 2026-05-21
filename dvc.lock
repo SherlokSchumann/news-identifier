@@ -25,12 +25,12 @@ stages:
       size: 6965493
     - path: src/train.py
       hash: md5
-      md5: 2ff74dbd663561805875bd3353d0a57e
+      md5: aa0686470d7410a7a10bb170ff1bef5b
       size: 7643
     outs:
     - path: models/transformer_classifier_5_layers.h5
       hash: md5
-      md5: 4d52bb271ec1a4e5125230f682f60d63
+      md5: d092c0ea9b4b061cffc8c273f5143937
       size: 5107656
   test:
     cmd: python src/test.py
@@ -41,7 +41,7 @@ stages:
       size: 6965493
     - path: models/transformer_classifier_5_layers.h5
       hash: md5
-      md5: 4d52bb271ec1a4e5125230f682f60d63
+      md5: d092c0ea9b4b061cffc8c273f5143937
       size: 5107656
     - path: src/test.py
       hash: md5

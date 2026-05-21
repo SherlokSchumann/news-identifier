@@ -54,5 +54,6 @@ jobs:
         git add dvc.lock
         git add -f models/*.h5 
         git add .
+        git pull origin dev1 --rebase
         git diff --staged --quiet || git commit -m "Update models and dvc.lock [CI]"
         git push origin HEAD:${{ github.head_ref }}

@@ -41,11 +41,14 @@ jobs:
       run: dvc pull --force || true
 
 
-    - name: DVC repro
-      run: dvc repro
+    # - name: DVC repro
+    #   run: dvc repro
 
-    - name: DVC push
-      run: dvc push
+    # - name: DVC push
+    #   run: dvc push
+
+    - name: Run tests
+      run: python src/test.py
 # we must commit both the models and the updated dvc.lock so that the next repro round runs. 
     - name: Commit updated dvc.lock
       run: |

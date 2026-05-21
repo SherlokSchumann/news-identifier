@@ -40,6 +40,8 @@ jobs:
     - name: DVC pull
       run: dvc pull --force || true
 
+    - name: Preprocess data
+      run: dvc repro preprocess
 
     # - name: DVC repro
     #   run: dvc repro

@@ -4,3 +4,5 @@
     url = s3://mybucketo
     endpointurl = https://s3.eu-central-003.backblazeb2.com
     region = eu-central-003
+    access_key_id = 003e80e1fefc8300000000001
+    secret_access_key = K003i+HyGiUQpoObMfhS+7yUxbqY6ck

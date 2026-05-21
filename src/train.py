@@ -202,7 +202,7 @@ def ComputeMetrics(y_val, y_pred):
 num_transformer_layers = 5
 model = build_and_save_transformer_classifier(num_transformer_layers)
 model.compile(optimizer="adam", loss="sparse_categorical_crossentropy", metrics=["accuracy"])
-history = model.fit(x_train, y_train, epochs=5, batch_size=64, validation_data=(x_val, y_val))
+history = model.fit(x_train, y_train, epochs=1, batch_size=64, validation_data=(x_val, y_val))
 
 ComputeMetrics(y_train  , np.argmax(model.predict(x_train), axis=1))
 

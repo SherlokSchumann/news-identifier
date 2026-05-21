@@ -1,16 +1,18 @@
 
 import re
+import json
+from pathlib import Path
 import streamlit as st
 import numpy as np
 from tensorflow import keras
-from tensorflow.keras.datasets import reuters
 from tensorflow.keras.models import load_model
 
 maxlen = 200
 vocab_size = 10000
 
-raw_word_index = reuters.get_word_index()
-word_index = {word: index for word, index in raw_word_index.items()}
+_word_index_path = Path(__file__).parent / "reuters_word_index.json"
+with open(_word_index_path) as f:
+    word_index = json.load(f)
 
 
 class TransformerBlock(keras.layers.Layer):
@@ -136,7 +138,14 @@ models_to_use = {
 }
 
 results = []
-label_names = reuters.get_label_names()
+label_names = [
+    'cocoa', 'grain', 'veg-oil', 'earn', 'acq', 'wheat', 'copper', 'housing',
+    'money-supply', 'coffee', 'sugar', 'trade', 'reserves', 'ship', 'cotton',
+    'carcass', 'crude', 'nat-gas', 'cpi', 'money-fx', 'interest', 'gnp',
+    'meal-feed', 'alum', 'oilseed', 'gold', 'tin', 'strategic-metal', 'livestock',
+    'retail', 'ipi', 'iron-steel', 'rubber', 'heat', 'jobs', 'lei', 'bop',
+    'zinc', 'orange', 'pet-chem', 'dlr', 'gas', 'silver', 'wpi', 'hog', 'lead',
+]
 
 
 # Run classification through streamlit UI and show results

@@ -13,12 +13,12 @@ stages:
       - src/train.py
       - dataset/dataset_preprocessed.npz
     outs:
-      - models/transformer_classifier_3_layers.h5
-        cache: false
-      - models/transformer_classifier_5_layers.h5
-        cache: false
-      - models/transformer_classifier_7_layers.h5
-        cache: false
+      - models/transformer_classifier_3_layers.h5:
+          cache: false
+      - models/transformer_classifier_5_layers.h5:
+          cache: false
+      - models/transformer_classifier_7_layers.h5:
+          cache: false
 
   test:
     cmd: python src/test.py
@@ -28,5 +28,3 @@ stages:
       - models/transformer_classifier_3_layers.h5
       - models/transformer_classifier_5_layers.h5
       - models/transformer_classifier_7_layers.h5
-
-      

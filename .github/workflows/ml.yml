@@ -59,11 +59,11 @@ jobs:
       run: |
         git config user.email "github-actions@github.com"
         git config user.name "GitHub Actions"
+        git checkout ${{ github.head_ref }}
         git add dvc.lock
         git add -f models/*.h5
-        git add .
         git diff --staged --quiet || git commit -m "Update models and dvc.lock [CI]"
-        git pull origin dev1 --rebase
-        git push origin HEAD:${{ github.head_ref }}
+        git pull -X ours origin ${{ github.head_ref }}
+        git push origin ${{ github.head_ref }}
 
 #f

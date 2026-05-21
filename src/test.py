@@ -6,6 +6,18 @@ import mlflow
 import matplotlib.pyplot as plt
 from tensorflow import keras
 from tensorflow.keras.preprocessing.sequence import pad_sequences
+
+# Keras 3.x stores quantization_config in Dense's get_config() but the legacy
+# H5 loader passes the full config dict to Dense.__init__, which rejects unknown
+# kwargs. Strip it before construction so cross-version H5 loading works.
+_orig_dense_from_config = keras.layers.Dense.from_config.__func__
+
+@classmethod
+def _dense_from_config(cls, config):
+    config.pop("quantization_config", None)
+    return _orig_dense_from_config(cls, config)
+
+keras.layers.Dense.from_config = _dense_from_config
 from sklearn.metrics import (
     accuracy_score,
     precision_score,
